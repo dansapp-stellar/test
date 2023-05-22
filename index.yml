@@ -1,0 +1,92 @@
+openapi: "3.0.0"
+info:
+    version: "1.0.0"
+    title: "IMS"
+    description: API for IMS
+paths:
+    /initial-state:
+        get:
+            summary: Get data needed to render base page
+            responses:
+                200:
+                    description: The data needed to render base page
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/initial-state"
+                404:
+                    description: Could not find API
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+components:
+    schemas:
+        initial-state:
+            description: The unique identifier of initial-state
+            type: object
+            properties:
+                name:
+                    description: A human readable error message
+                    type: string
+                logo:
+                    description: an image url for the logo in the center of the header, likely an S3 url
+                    type: string
+                currency:
+                    description: A human readable error message
+                    type: object
+                    properties:
+                        defaultCurrency:
+                            description: A human readable error message
+                            type: string
+                        currencies:
+                            type: array
+                            items:
+                                type: string
+                i18n:
+                    description: defines language used
+                    type: object
+                    properties:
+                        defaultLocale:
+                            type: string
+                            enum:
+                                - "en"
+                                - "es"
+                header:
+                    description: A human readable error message
+                    type: object
+                    properties:
+                        menuOptions:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                    options:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                icon:
+                                                    type: string
+                                                text:
+                                                    type: string
+                                                path:
+                                                    type: string
+        Error:
+            type: object
+            required:
+                - message
+            properties:
+                message:
+                    description: A human readable error message
+                    type: string
